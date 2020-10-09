@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link data-th-href="@{/css/bootstrap.css}" rel="stylesheet">
+<link data-th-href="@{/css/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="row">
+			<div id="title">
+				<h1>Spring WebFlux Reactive Todo</h1>
+			</div>
+			<table id="allappUsers" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Description</th>
+						<th>Completed?</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="result" data-th-each="todo : ${todos}">
+						<td>[[${todo.id}]]</td>
+						<td>[[${todo.text}]]</td>
+						<td>[[${todo.completed}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+</html>
