@@ -46,18 +46,17 @@ public class Application {
 
 		return (args) -> {
 			// save a few todos
-			repository.saveAll(Arrays.asList(new Todo(null, "My first Todo Task !", true), new Todo(null, "My second Todo Task !", false),
-					new Todo(null, "My second Todo Task !", false), new Todo(null, "My third Todo Task !", true),
-					
-					
+			repository.saveAll(Arrays.asList(
+					new Todo(null, "My first Todo Task !", true), 
+					new Todo(null, "My second Todo Task !", false),
+					new Todo(null, "My second Todo Task !", false), 
+					new Todo(null, "My third Todo Task !", true),
 					new  Todo(null, "My forth Todo Task !", true),
 		            new  Todo(null, "My fifth Todo Task !", false),
 		            new  Todo(null, "My sixth Todo Task !", true),
 		            new  Todo(null, "My seventh Todo Task !", true),
 		            new  Todo(null, "My eighth Todo Task !", false),
-		            new  Todo(null, "My nineth Todo Task !", false)
-					
-					))
+		            new  Todo(null, "My nineth Todo Task !", false)))
 					.blockLast(Duration.ofSeconds(10));
 
 			// fetch all todos
@@ -78,7 +77,7 @@ public class Application {
 			}).block(Duration.ofSeconds(10));
 
 			// fetch todos by text
-			log.info("Todo found with findByLastName('My second Todo Task !'):");
+			log.info("Todo found with text('My second Todo Task !'):");
 			log.info("--------------------------------------------");
 			repository.findByText("My second Todo Task !").doOnNext(bauer -> {
 				log.info(bauer.toString());
