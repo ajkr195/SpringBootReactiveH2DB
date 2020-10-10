@@ -9,8 +9,10 @@ import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 
 import spring.boot.webflux.repository.TodoAlternateRepo;
 import spring.boot.webflux.repository.TodoRepository;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
+@ApiIgnore
 public class AppController {
 	@Autowired
     private TodoRepository todoRepository;
