@@ -2,6 +2,13 @@
 
 SpringBoot WebFlux Reactive with H2DB and Thymeleaf
 
+http://localhost:8080/
+
+http://localhost:8080/index2
+
+http://localhost:8080/crud
+
+http://localhost:8080/swagger-ui/
 
 <h4> ScreenShot </h4>
 
