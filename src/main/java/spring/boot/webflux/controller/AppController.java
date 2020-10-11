@@ -1,5 +1,7 @@
 package spring.boot.webflux.controller;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,40 +17,35 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class AppController {
 	@Autowired
-    private TodoRepository todoRepository;
-	
+	private TodoRepository todoRepository;
+
 	@Autowired
-    private TodoAlternateRepo todoAlternateRepo;
+	private TodoAlternateRepo todoAlternateRepo;
 
-    @RequestMapping("/")
-    public String index(final Model model) {
+	@RequestMapping("/")
+	public String index(final Model model) {
 
-        // loads 1 and display 1, stream data, data driven mode.
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(todoRepository.findAll(), 1);
+		// load and display 2 at a time - stream data - data driven mode.
+		IReactiveDataDriverContextVariable reactiveDataDrivenMode = new ReactiveDataDriverContextVariable(
+				todoRepository.findAll().delayElements(Duration.ofMillis(200)), 1);//.log(), 1);
 
-        model.addAttribute("todos", reactiveDataDrivenMode);
+		model.addAttribute("todos", reactiveDataDrivenMode);
 
-        // classic, wait repository loaded all and display it.
-        //model.addAttribute("todos", todoRepository.findAll());
+		// classic, loaded all and display them.
+		// model.addAttribute("todos", todoRepository.findAll());
 
-        return "index";
+		return "index";
 
-    }
-    
-    @RequestMapping("/index2")
-    public String index2Alternate(final Model model) {
+	}
 
-        // loads 1 and display 1, stream data, data driven mode.
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(todoAlternateRepo.findAll(), 1);
+	@RequestMapping("/index2")
+	public String index2Alternate(final Model model) {
 
-        model.addAttribute("todos", reactiveDataDrivenMode);
+		IReactiveDataDriverContextVariable reactiveDataDrivenMode = new ReactiveDataDriverContextVariable(
+				todoAlternateRepo.findAll(), 1);
 
-        // classic, wait repository loaded all and display it.
-        //model.addAttribute("todos", todoRepository.findAll());
+		model.addAttribute("todos", reactiveDataDrivenMode);
+		return "index2";
 
-        return "index2";
-
-    }
+	}
 }

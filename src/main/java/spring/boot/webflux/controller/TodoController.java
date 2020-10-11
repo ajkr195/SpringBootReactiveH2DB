@@ -1,6 +1,7 @@
 package spring.boot.webflux.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +26,12 @@ class TodoController {
         this.repository = repository;
     }
 
-    @GetMapping("/todo")
+    @GetMapping(value= "/todo", produces=MediaType.TEXT_EVENT_STREAM_VALUE)
+//    @GetMapping("/todo")
     Flux<Todo> getAll() {
         return repository.findAll();
     }
-
+    
     @PostMapping("/todo")
     Mono<Todo> addTodo(@RequestBody Todo todo) {
         return repository.save(todo);

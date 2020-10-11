@@ -25,9 +25,10 @@ public class ReactiveTodoRepository implements TodoAlternateRepo {
 
     @Override
     public Flux<Todo> findAll() {
+    	
         //simulate stream data with 2 seconds delay.
-        return Flux.fromIterable(todo).delayElements(Duration.ofMillis(400));
-//        return Flux.fromIterable(todo).delayElements(Duration.ofSeconds(1));
+        return Flux.fromIterable(todo).delayElements(Duration.ofMillis(400)); //.log();
+        //return Flux.fromIterable(todo).delayElements(Duration.ofSeconds(1));
     }
 
 }
