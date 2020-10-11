@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link data-th-href="@{/css/bootstrap.css}" rel="stylesheet">
+<link data-th-href="@{/css/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+	<div class="container">
+		<div id="title">
+			<h2>Spring WebFlux Reactive Todo - CRUD</h2>
+		</div>
+
+
+		<form onsubmit="event.preventDefault();onFormSubmit();"
+			autocomplete="off">
+			<div class="row mb-2">
+				<div class="col-md-2 text-right font-weight-bold">
+					<label for="todoid" class="form-label">Id</label>
+				</div>
+				<div class="col-md-2">
+					<div class="input-group">
+						<input type="text" class="form-control form-control-sm"
+							name="todoid" id="todoid" readonly>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row mb-2">
+				<div class="col-md-2 text-right font-weight-bold">
+					<label for="todotext" class="form-label">Description</label>
+				</div>
+				<div class="col-md-6">
+					<div class="input-group">
+						<input type="text" class="form-control form-control-sm"
+							name="todotext" id="todotext">
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-2">
+				<div class="col-md-2 text-right font-weight-bold">
+					<label for="todocompleted" class="form-label">Completed?</label>
+				</div>
+				<div class="col-md-2">
+					<div class="input-group">
+						<select class="form-select form-control-sm" name="todocompleted"
+							id="todocompleted">
+							<option value="true">True</option>
+							<option selected value="false">False</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row mt-3 mb-3">
+				<div class="col-md-2 font-weight-bold"></div>
+				<div class="col-md-9">
+					<input type="submit" value="Submit"
+						class="btn btn-sm btn-primary btn-block">
+				</div>
+			</div>
+
+		</form>
+		<div class="row mt-3 mb-3">
+			<div class="col-md-2 font-weight-bold"></div>
+			<div class="col-md-9">
+				<table class="table table-sm table-striped" id="dataTable">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Description</th>
+							<th>Completed?</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="appDataTable2"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" th:src="@{/js/crud.js}"></script>
+
+</html>

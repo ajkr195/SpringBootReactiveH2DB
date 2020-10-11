@@ -1,5 +1,4 @@
-<script>
-    var evtSource = new EventSource("http://localhost:8080/pets");
+    var evtSource = new EventSource("http://localhost:8080/todo");
     evtSource.onmessage = function (event) {
         var data = JSON.parse(event.data);
         var table = document.getElementById("pets-table");
@@ -19,4 +18,3 @@
         cell4.innerHTML = '<td>' + shelterAddress + '</td>';
 
     }
-</script>

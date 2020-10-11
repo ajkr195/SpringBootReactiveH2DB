@@ -12,18 +12,18 @@
 <body>
 
 	<div class="container">
+		<div id="title">
+			<h1>Spring WebFlux Reactive Todo</h1>
+		</div>
 
-		<div class="row">
-			<div id="title">
-				<h1>Spring WebFlux Reactive Todo</h1>
-			</div>
+		<div class="row" id="myDIV">
 			<table id="allappTodos" class="table table-striped">
 				<thead>
 					<tr>
 						<th>Id</th>
 						<th>Description</th>
 						<th>Completed?</th>
-						<th>Delete</th>
+						<!--<th>Delete</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -31,24 +31,104 @@
 						<td>[[${todo.id}]]</td>
 						<td>[[${todo.text}]]</td>
 						<td>[[${todo.completed}]]</td>
-						<td><button type="button" th:onclick="|deleteRecord(${todo.id})|" class="btn btn-sm btn-danger">X</button></td>
-						
+						<!-- <td><button type="button" -->
+						<!-- th:onclick="|deleteRecord(${todo.id})|" -->
+						<!-- class="btn btn-sm btn-danger">X</button></td> -->
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
+		<br /> <br />
+		<div class="col-sm-4">
+			<button type="button" th:onclick="|reloadRecords()|"
+				class="btn btn-sm btn-success">Load above table Using JS</button>
+		</div>
+		<br /> <br />
+		<table class="table table-sm table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Description</th>
+					<th>Completed?</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+
+			<tbody id="appDataTable2">
+
+			</tbody>
+		</table>
+
 	</div>
 
 </body>
+
 <script type="text/javascript">
-function deleteRecord(id) {
-	var url="/api/todo/" + id;
-	alert('Hello, This operation will delete Todo with ID :: ' + id);
-	if (confirm("Are you sure?")) 
-	 fetch(url , {
-	           method: 'DELETE',headers: {'Accept': 'application/json'}
-	       })
-	}
+
+document.addEventListener("DOMContentLoaded", function() {
+	//alert('DOM ready !');
+});
+
 </script>
+
+<script type="text/javascript">
+
+async function deleteRecord(id) {
+	
+	var url="/api/todo/" + id;
+	
+	//alert('Selected ID :: ' + id);
+	
+	if (confirm("Hello, This operation will delete Todo with ID"+ id + ":: Are you sure?")) 
+      await fetch(url , { method: 'DELETE',headers: {'Accept': 'application/json'}})
+	 
+	 .then((response) => {
+		 if (response.status >= 400 && response.status < 600) {
+	    	 throw new Error("Bad response from server");
+	     }
+	     if (response.status === 200) {
+	    	alert('Delete Successful.. ! \nTable will be reloaded now.!');
+	    	reloadRecords();
+	    	alert('Will reload entire PAGE now.!');
+	    	location.reload();
+	     }
+	 // alert(response.status);
+	 })
+	 .catch((error) => {
+	    	      // Your error is here!
+	    	      alert(error)
+	  });
+	
+	}
+	
+</script>
+
+<script type="text/javascript">
+	async function reloadRecords(){
+		await fetch("/api/todos").then(
+				res=>{ res.text().then(
+						data=>{
+							//alert(data);
+							data = JSON.parse(data);
+							var trtdVar = "";
+							data.forEach((u)=>{
+								trtdVar += "<tr>";
+								trtdVar += "<td>" + u.id+"</td>";
+								trtdVar += "<td>" + u.text+"</td>";
+								trtdVar += "<td>" + u.completed+"</td><td><a href=\"#\" onclick=\"deleteRecord(" + u.id + ")\" class=\"btn btn-sm btn-danger delBtn\"\>X</a></td></tr>";
+							})
+							
+							document.getElementById("appDataTable2").innerHTML = trtdVar;
+						})
+				}
+			)
+		}
+</script>
+<script type="text/javascript">
+ // var x = document.getElementById("someDiv");
+ //	  x.style.display = "none";
+ 
+</script>
+
 </html>

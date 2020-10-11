@@ -19,31 +19,35 @@ import spring.boot.webflux.repository.TodoRepository;
 @RestController
 @RequestMapping("/api")
 class TodoController {
-    private TodoRepository repository;
+	private TodoRepository repository;
 
-    @Autowired
-    public TodoController(TodoRepository repository) {
-        this.repository = repository;
-    }
+	@Autowired
+	public TodoController(TodoRepository repository) {
+		this.repository = repository;
+	}
 
-    @GetMapping(value= "/todo", produces=MediaType.TEXT_EVENT_STREAM_VALUE)
-//    @GetMapping("/todo")
-    Flux<Todo> getAll() {
-        return repository.findAll();
-    }
-    
-    @PostMapping("/todo")
-    Mono<Todo> addTodo(@RequestBody Todo todo) {
-        return repository.save(todo);
-    }
+	@GetMapping(value = "/todo", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	Flux<Todo> getAll() {
+		return repository.findAll();
+	}
 
-    @PutMapping("/todo")
-    Mono<Todo> updateTodo(@RequestBody Todo todo) {
-        return repository.save(todo);
-    }
+	@GetMapping("/todos")
+	Flux<Todo> getAllTodos() {
+		return repository.findAll();
+	}
 
-    @DeleteMapping("/todo/{id}")
-    Mono<Void> deleteById(@PathVariable("id") Long id) {
-        return repository.deleteById(id);
-    }
+	@PostMapping("/todo")
+	Mono<Todo> addTodo(@RequestBody Todo todo) {
+		return repository.save(todo);
+	}
+
+	@PutMapping("/todo")
+	Mono<Todo> updateTodo(@RequestBody Todo todo) {
+		return repository.save(todo);
+	}
+
+	@DeleteMapping("/todo/{id}")
+	Mono<Void> deleteById(@PathVariable("id") Long id) {
+		return repository.deleteById(id);
+	}
 }

@@ -48,4 +48,10 @@ public class AppController {
 		return "index2";
 
 	}
+	
+	@RequestMapping("/crud")
+	public String crud(final Model model) {
+		return "crud";
+
+	}
 }
