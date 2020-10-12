@@ -1,5 +1,7 @@
 package spring.boot.webflux.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,9 @@ import spring.boot.webflux.repository.TodoRepository;
 @RestController
 @RequestMapping("/api")
 class TodoController {
+
+	Logger logger = (Logger) LoggerFactory.getLogger(TodoController.class);
+
 	private TodoRepository repository;
 
 	@Autowired
@@ -28,26 +33,36 @@ class TodoController {
 
 	@GetMapping(value = "/todo", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	Flux<Todo> getAll() {
-		return repository.findAll();
+		logger.info("FindingAllTodos...");
+		return repository.findAll().log();
+		//return repository.findAll();
 	}
 
 	@GetMapping("/todos")
 	Flux<Todo> getAllTodos() {
-		return repository.findAll();
+		logger.info("FindingAllTodos...");
+		return repository.findAll().log();
+		//return repository.findAll();
 	}
 
 	@PostMapping("/todo")
 	Mono<Todo> addTodo(@RequestBody Todo todo) {
-		return repository.save(todo);
+		logger.info("Creating New Todo...");
+		return repository.save(todo).log();
+		//return repository.save(todo);
 	}
 
 	@PutMapping("/todo")
 	Mono<Todo> updateTodo(@RequestBody Todo todo) {
-		return repository.save(todo);
+		logger.info("Updating Todo with ID: {}", todo.getId());
+		return repository.save(todo).log();
+		//return repository.save(todo); 
 	}
 
 	@DeleteMapping("/todo/{id}")
 	Mono<Void> deleteById(@PathVariable("id") Long id) {
-		return repository.deleteById(id);
+		logger.info("Deleting Todo with ID: {}", id);
+		return repository.deleteById(id).log();
+		//return repository.deleteById(id);
 	}
 }

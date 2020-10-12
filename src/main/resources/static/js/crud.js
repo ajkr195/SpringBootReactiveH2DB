@@ -126,7 +126,7 @@ fetch("/api/todos").then(
 								trtdVar += "<tr>";
 								trtdVar += "<td>" + u.id+"</td>";
 								trtdVar += "<td>" + u.text+"</td>";
-								trtdVar += "<td>" + u.completed+"</td><td><a href=\"#\" onclick=\"onEdit(" + `this` + ")\" class=\"btn btn-sm btn-warning mr-3 editBtn\"\>Edit</a><a href=\"#\" onclick=\"deleteRecord(" + u.id + ")\" class=\"btn btn-sm btn-danger delBtn\"\>X</a></td></tr>";
+								trtdVar += "<td>" + u.completed+"</td><td><button onclick=\"onEdit(" + `this` + ")\" class=\"btn btn-sm btn-warning mr-3 editBtn\">Edit</button><button onclick=\"deleteRecord(" + u.id + ")\" class=\"btn btn-sm btn-danger mr-3\">X</button></td></tr>";
 							})
 							
 							document.getElementById("appDataTable2").innerHTML = trtdVar;
@@ -146,7 +146,7 @@ async function reloadRecords(){
 								trtdVar += "<tr>";
 								trtdVar += "<td>" + u.id+"</td>";
 								trtdVar += "<td>" + u.text+"</td>";
-								trtdVar += "<td>" + u.completed+"</td><td><a href=\"#\" onclick=\"onEdit(" + this + ")\" class=\"btn btn-sm btn-warning mr-3 editBtn\"\>Edit</a><a href=\"#\" onclick=\"deleteRecord(" + u.id + ")\" class=\"btn btn-sm btn-danger delBtn\"\>X</a></td></tr>";
+								trtdVar += "<td>" + u.completed+"</td><td><button onclick=\"onEdit(" + `this` + ")\" class=\"btn btn-sm btn-warning mr-3 editBtn\">Edit</button><button onclick=\"deleteRecord(" + u.id + ")\" class=\"btn btn-sm btn-danger mr-3\">X</button></td></tr>";
 							})
 							
 							document.getElementById("appDataTable2").innerHTML = trtdVar;
