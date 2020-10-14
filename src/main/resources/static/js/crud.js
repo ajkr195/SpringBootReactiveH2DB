@@ -25,34 +25,28 @@ function insertNewRecord(formData) {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({ id: formData.todoid, text: formData.todotext, completed: formData.todocompleted })
-	}).then((response) => {
-		if (response.status >= 400 && response.status < 600) {
-			throw new Error("Bad response from server");
-		}
-		if (response.status === 200) {
-			alert('Entry Successful.. ! \nTable will be reloaded now.!');
-			//reloadRecords();
-			var table = document.getElementById("dataTable").getElementsByTagName('tbody')[0];
+	})
+	
+	.then(response => response.json())
+	.then(data => {
+	        var table = document.getElementById("dataTable").getElementsByTagName('tbody')[0];
 			var newRow = table.insertRow(table.length);
 			cell1 = newRow.insertCell(0);
-			cell1.innerHTML = formData.todoid;
+			cell1.innerHTML = data.id;
 			cell2 = newRow.insertCell(1);
-			cell2.innerHTML = formData.todotext;
+			cell2.innerHTML = data.text;
 			cell3 = newRow.insertCell(2);
-			cell3.innerHTML = formData.todocompleted;
+			cell3.innerHTML = data.completed;
 			cell4 = newRow.insertCell(3);
 			cell4.innerHTML = `<a class="btn btn-sm btn-warning mr-3" onClick="onEdit(this)">Edit</a>
                        <a class="btn btn-sm btn-danger" onClick="onDelete(this)">X</a>`;
-
-
-
-		}
-		// alert(response.status);
-	})
-		.catch((error) => {
-			// Your error is here!
-			alert(error)
-		});
+            alert("Entry Successful.. ! New Todo's ID is - " + data.id );
+	
+     })
+     .catch((error) => {
+		// Your error is here!
+		alert(error)
+	  });
 }
 
 function resetForm() {
