@@ -1,0 +1,14 @@
+<html>
+<body onload="run()">
+	<script type="text/javascript">
+		function run() {
+			var ws = new WebSocket("ws://localhost:8080/websocket/todo");
+			ws.onmessage = function(msg) {
+				alert("WebSocket message : " + msg.data.toString());
+				//console.log("message: " + msg.data.toString());
+			}
+		}
+	</script>
+
+</body>
+</html>

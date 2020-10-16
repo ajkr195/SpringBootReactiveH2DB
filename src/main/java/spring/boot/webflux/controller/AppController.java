@@ -72,4 +72,16 @@ public class AppController {
 		return "indexlive3";
 
 	}
+	
+	@RequestMapping("/indexlive4")
+	public String indexLive4(final Model model) {
+		return "indexlive4";
+
+	}
+	
+	@RequestMapping("/indexlive5")
+	public String indexLive5(final Model model) {
+		return "indexlive5";
+
+	}
 }

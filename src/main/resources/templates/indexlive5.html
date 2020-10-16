@@ -9,7 +9,7 @@
 <link data-th-href="@{/css/main.css}" rel="stylesheet">
 </head>
 
-<body>
+<body onload="run()">
 	<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">WEBFLUX</a>
@@ -52,23 +52,19 @@
 	</nav>
 	<div class="container">
 		<div id="title">
-			<h1>Spring WebFlux Reactive Todo - LiveFeed</h1>
+			<h1>Spring WebFlux Reactive Todo - LiveFeed - WebSocket TextMessages</h1>
 		</div>
 
 		<div class="row" id="myDIV">
 			<table id="todos" class="table table-striped">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Description</th>
-						<th>Completed?</th>
+						<th>MessageFromWebSocket</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="result" data-th-each="todo : ${todos}">
-						<td>[[${todo.id}]]</td>
-						<td>[[${todo.text}]]</td>
-						<td>[[${todo.completed}]]</td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table>
@@ -78,6 +74,23 @@
 	</div>
 
 </body>
-<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script type="text/javascript">
+		function run() {
+			
+			 var commentTable = document.getElementById("todos");
+			 
+			 
+			var ws = new WebSocket("ws://localhost:8080/websocket/todo");
+			ws.onmessage = function(msg) {
+				//console.log("message: " + msg.data.toString());
+				 var row = commentTable.getElementsByTagName("tbody")[0].insertRow(0);
+		            var cell0 = row.insertCell(0);
+
+		            cell0.className = "id";
+		            cell0.innerHTML = msg.data.toString();
+
+			}
+		}
+	</script>
 <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
 </html>
