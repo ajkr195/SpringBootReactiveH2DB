@@ -54,4 +54,10 @@ public class AppController {
 		return "crud";
 
 	}
+	
+	@RequestMapping("/indexlive")
+	public String indexLive(final Model model) {
+		return "indexlive";
+
+	}
 }

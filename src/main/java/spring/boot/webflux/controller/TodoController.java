@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import spring.boot.webflux.model.Todo;
+import spring.boot.webflux.repository.MyRepository;
 import spring.boot.webflux.repository.TodoRepository;
 
 @RestController
@@ -25,10 +26,21 @@ class TodoController {
 	Logger logger = (Logger) LoggerFactory.getLogger(TodoController.class);
 
 	private TodoRepository repository;
+	
+	 @Autowired
+	    private MyRepository myRepository;
 
 	@Autowired
 	public TodoController(TodoRepository repository) {
 		this.repository = repository;
+	}
+	
+	
+	@GetMapping(value = "/todo/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	Flux<Todo> getAllLive() {
+		logger.info("FindingAllTodos...Live...");
+		return myRepository.findAll();
+		//return repository.findAll();
 	}
 
 	@GetMapping(value = "/todo", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
