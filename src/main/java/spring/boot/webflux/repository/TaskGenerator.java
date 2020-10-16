@@ -3,6 +3,7 @@ package spring.boot.webflux.repository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TaskGenerator {
 
@@ -26,5 +27,12 @@ public class TaskGenerator {
     public static Boolean randomStatus() {
         return TASK_STATUS.get(RANDOM.nextInt(TASK_STATUS.size()));
     }
+    
+    public static Long randomId() {
+        return ThreadLocalRandom.current().nextLong(21, 1234567890);
+    }
+    
+    
+    
 
 }

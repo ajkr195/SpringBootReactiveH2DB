@@ -24,7 +24,7 @@ public class MyOwnRepo implements MyRepository {
 
 	    private List<Todo> generateTask(long interval) {
 
-	    	Todo obj = new Todo(null, TaskGenerator.randomTaskName(), TaskGenerator.randomStatus());
+	    	Todo obj = new Todo(TaskGenerator.randomId(), TaskGenerator.randomTaskName(), TaskGenerator.randomStatus());
 	        return Arrays.asList(obj);
 
 	    }
