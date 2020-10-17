@@ -35,7 +35,7 @@ public class WebSocketConfiguration {
 
 				Flux<WebSocketMessage> generate = Flux
 						.<Todo>generate(sink -> sink.next(new Todo(TaskGenerator.randomId(), TaskGenerator.randomTaskName(), TaskGenerator.randomStatus())))
-						.map(todo -> session.textMessage("id: " + todo.getId()+ " description: " + todo.getText()  +  " completedStatus: " + todo.isCompleted() )).delayElements(Duration.ofSeconds(1))
+						.map(todo -> session.textMessage(todo.getId()+ "," + todo.getText()  +  "," + todo.isCompleted() )).delayElements(Duration.ofSeconds(1))
 						.doFinally(signalType -> System.out.println("Goodbye from WebSocket..!!"));
 				return session.send(generate);
 			}

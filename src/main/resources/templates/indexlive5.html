@@ -30,7 +30,8 @@
 					<li class="nav-item"><a class="nav-link" href="/indexlive4">LiveFeed4</a></li>
 					<li class="nav-item"><a class="nav-link" href="/indexlive5">LiveFeed5</a></li>
 					<li class="nav-item"><a class="nav-link" href="/crud">CRUD</a></li>
-					<li class="nav-item"><a class="nav-link" target="_blank" href="/swagger-ui/">SwaggerUI</a></li>
+					<li class="nav-item"><a class="nav-link" target="_blank"
+						href="/swagger-ui/">SwaggerUI</a></li>
 					<li class="nav-item"><a class="nav-link disabled" href="#"
 						tabindex="-1" aria-disabled="true">Disabled</a></li>
 					<li class="nav-item dropdown"><a
@@ -52,19 +53,20 @@
 	</nav>
 	<div class="container">
 		<div id="title">
-			<h1>Spring WebFlux Reactive Todo - LiveFeed - WebSocket TextMessages</h1>
+			<h4>Spring WebFlux Reactive Todo - LiveFeed - WebSocket Messages</h4>
 		</div>
 
 		<div class="row" id="myDIV">
-			<table id="todos" class="table table-striped">
+			<table id="todos" class="table table-sm table-striped">
 				<thead>
 					<tr>
-						<th>MessageFromWebSocket</th>
+						<th>Id</th>
+						<th>Description</th>
+						<th>Completed?</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="result" data-th-each="todo : ${todos}">
-						<td></td>
 					</tr>
 				</tbody>
 			</table>
@@ -75,22 +77,27 @@
 
 </body>
 <script type="text/javascript">
-		function run() {
-			
-			 var commentTable = document.getElementById("todos");
-			 
-			 
-			var ws = new WebSocket("ws://localhost:8080/websocket/todo");
-			ws.onmessage = function(msg) {
-				//console.log("message: " + msg.data.toString());
-				 var row = commentTable.getElementsByTagName("tbody")[0].insertRow(0);
-		            var cell0 = row.insertCell(0);
+	function run() {
 
-		            cell0.className = "id";
-		            cell0.innerHTML = msg.data.toString();
+		var commentTable = document.getElementById("todos");
 
-			}
+		var myWebSocket = new WebSocket("ws://localhost:8080/websocket/todo");
+		myWebSocket.onmessage = function(msg) {
+			//console.log("message: " + msg.data.toString());
+			var row = commentTable.getElementsByTagName("tbody")[0]
+					.insertRow(0);
+			var entryArray = msg.data.toString().split(",");
+			var cell0 = row.insertCell(0);
+			var cell1 = row.insertCell(1);
+			var cell2 = row.insertCell(2);
+			cell0.className = "id";
+			cell0.innerHTML = entryArray[0];
+			cell1.className = "text";
+			cell1.innerHTML = entryArray[1];
+			cell2.className = "completed";
+			cell2.innerHTML = entryArray[2];
 		}
-	</script>
+	}
+</script>
 <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
 </html>
